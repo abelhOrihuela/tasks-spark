@@ -1,0 +1,59 @@
+{
+  "hosts": [
+    {
+      "host": "165.227.17.233",
+      "name": "Blaze prod",
+      "user": "app",
+      "commands": [
+        {
+          "command": "landing",
+          "is_folder": true,
+          "commands": [
+            {
+              "command": "git reset --hard",
+              "is_folder": false
+            },
+            {
+              "command": "git checkout master",
+              "is_folder": false
+            },
+            {
+              "command": "git pull",
+              "is_folder": false
+            },
+            {
+              "command": "npm i",
+              "is_folder": false
+            },
+            {
+              "command": "npm run build",
+              "is_folder": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "host": "167.172.220.80",
+      "name": "Declarapat Prod",
+      "user": "app",
+      "commands": [
+        {
+          "command": "declarapat",
+          "is_folder": true,
+          "commands": [
+            {
+              "command": "git pull",
+              "is_folder": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "host": "159.89.137.0",
+      "name": "B2B Staging",
+      "user": "app"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+hosts:
+- host: XX.XX.XX.XX
+  name: Landing prod
+  user: app
+  commands:
+  - command: landing
+    is_folder: true
+    commands:
+    - command: git reset --hard
+    - command: git checkout master
+    - command: git pull
+    - command: npm i
+    - command: npm run build
+    
+- host: XX.XX.XX.XX
+  name: App prod
+  user: app
+  commands:
+  - command: landing
+    is_folder: true
+    commands:
+    - command: git pull  
+
+- host: XX.XX.XX.XX
+  name: B2B Staging
+  user: app
+  commands:
+  - command: landing
+    is_folder: true
+    commands:
+    - command: git reset --hard
+    - command: git checkout master
+    - command: git pull
+    - command: npm i
+    - command: npm run build
