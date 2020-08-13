@@ -4,7 +4,7 @@ hosts:
   user: app
   commands:
   - command: landing
-    is_folder: true
+    folder: true
     commands:
     - command: git reset --hard
     - command: git checkout master
@@ -17,7 +17,7 @@ hosts:
   user: app
   commands:
   - command: landing
-    is_folder: true
+    folder: true
     commands:
     - command: git pull  
 
@@ -26,10 +26,25 @@ hosts:
   user: app
   commands:
   - command: landing
-    is_folder: true
+    folder: true
     commands:
     - command: git reset --hard
     - command: git checkout master
     - command: git pull
     - command: npm i
     - command: npm run build
+
+
+- host: XX.XX.XX.XX
+  name: App ttl
+  user: app
+  commands:
+  - command: app-prod
+    folder: true
+    commands:
+    - command: git pull
+  - command: docker-app-prod
+    folder: true
+    commands:
+    - command: docker-compose up --build --force-recreate -d
+  - command: docker exec -i docker-app-prod_app_1 bash -c "cd /var/www/ && php artisan migrate --force"
