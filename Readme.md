@@ -17,15 +17,31 @@ hosts:
 - host: XX.XX.XX.XX
   name: Landing prod
   user: app
-  commands:
-  - command: landing
-    is_folder: true
-    commands:
-    - command: git reset --hard
-    - command: git checkout master
-    - command: git pull
-    - command: npm i
-    - command: npm run build
+  steps:
+  - cd: landing
+    steps:
+    - run: git reset --hard
+    - run: git checkout master
+    - run: git pull
+    - run: npm i
+    - run: npm run build
+
+
+- host: XX.XX.XX.XX
+  name: App Diseño
+  user: app
+  steps:
+  - cd: app-diseno
+    folder: true
+    steps:
+    - run: git pull
+    - run: npm i
+    - run: npm run prod
+  - cd: docker-app-diseno
+    steps:
+    - run: docker-compose up --build --force-recreate -d
+  - run: 'docker exec -i docker-app-diseno_app_1 bash -c
+   "cd /var/www/ && php artisan migrate --force"'
 ```
 ### Ejecución 🔧
 
