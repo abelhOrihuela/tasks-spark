@@ -2,49 +2,44 @@ hosts:
 - host: XX.XX.XX.XX
   name: Landing prod
   user: app
-  commands:
-  - command: landing
-    folder: true
-    commands:
-    - command: git reset --hard
-    - command: git checkout master
-    - command: git pull
-    - command: npm i
-    - command: npm run build
+  steps:
+  - cd: landing
+    steps:
+    - run: git reset --hard
+    - run: git checkout master
+    - run: git pull
+    - run: npm i
+    - run: npm run build
     
 - host: XX.XX.XX.XX
   name: App prod
   user: app
-  commands:
-  - command: landing
-    folder: true
-    commands:
-    - command: git pull  
+  steps:
+  - cd: landing
+    steps:
+    - run: git pull  
 
 - host: XX.XX.XX.XX
   name: B2B Staging
   user: app
-  commands:
-  - command: landing
-    folder: true
-    commands:
-    - command: git reset --hard
-    - command: git checkout master
-    - command: git pull
-    - command: npm i
-    - command: npm run build
+  steps:
+  - cd: landing
+    steps:
+    - run: git reset --hard
+    - run: git checkout master
+    - run: git pull
+    - run: npm i
+    - run: npm run build
 
 
 - host: XX.XX.XX.XX
   name: App ttl
   user: app
-  commands:
-  - command: app-prod
-    folder: true
-    commands:
-    - command: git pull
-  - command: docker-app-prod
-    folder: true
-    commands:
-    - command: docker-compose up --build --force-recreate -d
-  - command: docker exec -i docker-app-prod_app_1 bash -c "cd /var/www/ && php artisan migrate --force"
+  steps:
+  - cd: app-prod
+    steps:
+    - run: git pull
+  - cd: docker-app-prod
+    steps:
+    - run: docker-compose up --build --force-recreate -d
+  - run: docker exec -i docker-app-prod_app_1 bash -c "cd /var/www/ && php artisan migrate --force"

@@ -12,7 +12,7 @@ hosts = data["hosts"]
 print("============= hosts ===============")
 i = 0
 while i < len(hosts):
-    print(TGREEN + "({}): {} - {}@{}".format(i, hosts[i]["name"], hosts[i]["user"], hosts[i]["host"]) + ENDC)
+    print(TGREEN + "{}.- {} - {}@{}".format(i, hosts[i]["name"], hosts[i]["user"], hosts[i]["host"]) + ENDC)
     i+=1
 
 print("===================================")
@@ -29,19 +29,15 @@ while selected_host is None:
 password = getpass.getpass("Ingresa la contraseña: ")
 
 def run_commands(connection, steps):
-    if 'commands' in steps.keys():
-        for step in steps["commands"]:
-            print (TGREEN + 'run ===> ' + step["command"] + ENDC)
-
-            if 'folder' in step.keys() and step["folder"]:
-                with connection.cd(step["command"]):
-                    run_commands(connection, step)
-            elif 'context' in step.keys() and step["context"]:
-                print("context")
-                with connection.run(step["command"]):
+    if 'steps' in steps.keys():
+        for step in steps["steps"]:
+            if 'cd' in step.keys():
+                print (TGREEN + 'run ===> ' + step["cd"] + ENDC)
+                with connection.cd(step["cd"]):
                     run_commands(connection, step)
             else:
-                connection.run(step["command"])
+                print (TGREEN + 'run ===> ' + step["run"] + ENDC)
+                connection.run(step["run"])
                 run_commands(connection, step)
 
 
