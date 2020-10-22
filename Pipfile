@@ -10,6 +10,7 @@ fabric = "*"
 getpass3 = "*"
 pyyaml = "*"
 black = "*"
+prettytable = "*"
 
 [requires]
 python_version = "3.7"
